@@ -7,7 +7,16 @@ using System.Threading.Tasks;
 
 namespace lab5
 {
-    public abstract class Vehicle
+    public interface IVehicle : ICloneable, IComparable<IVehicle>
+    {
+        int Price { get; set; }
+        int Speed { get; set; }
+        int ManufacturingYear { get; set; }
+        int this[string propertyName] { get; set; }
+        void SetSpeed(int speed);
+    }
+
+    public abstract class AbstractVehicle : IVehicle
     {
         private int price = 0;
 
@@ -17,7 +26,7 @@ namespace lab5
 
         public int Price
         {
-            get 
+            get
             {
                 return price;
             }
@@ -66,7 +75,7 @@ namespace lab5
                 else if (property.Equals("speed"))
                 {
                     return Speed;
-                } 
+                }
                 else if (property.Equals("manufacturingYear"))
                 {
                     return ManufacturingYear;
@@ -97,26 +106,37 @@ namespace lab5
             }
         }
 
-        public Vehicle()
+        public AbstractVehicle()
         {
         }
 
-        public Vehicle(int price, int speed, int manufacturingYear)
+        public abstract void SetSpeed(int speed);
+
+        public AbstractVehicle(int price, int speed, int manufacturingYear)
         {
             Price = price;
             Speed = speed;
             ManufacturingYear = manufacturingYear;
         }
 
-        public abstract void SetSpeed(int speed);
-
         public override string ToString()
         {
             return "Vehicle{price = " + price + ", speed = " + speed + ", manufacturingYear = " + manufacturingYear + "}";
         }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public int CompareTo(IVehicle other)
+        {
+            return Price.CompareTo(other.Price);
+        }
+        
     }
 
-    public class Car : Vehicle
+    public class Car : AbstractVehicle
     {
 
         public Car()
@@ -142,7 +162,7 @@ namespace lab5
         }
     }
 
-    public abstract class MultiSeaterVehicle : Vehicle
+    public abstract class MultiSeaterVehicle : AbstractVehicle
     {
         private int numberOfPassangers = 0;
 

@@ -13,9 +13,9 @@ namespace lab5
     public partial class CreateCar : Form
     {
 
-        private BindingList<Vehicle> vehicles;
+        private BindingList<IVehicle> vehicles;
 
-        public CreateCar(BindingList<Vehicle> vehicles)
+        public CreateCar(BindingList<IVehicle> vehicles)
         {
             this.vehicles = vehicles;
             InitializeComponent();

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,10 +14,14 @@ namespace lab5
     public partial class Lab5MainWindow : Form
     {
 
-        private BindingList<Vehicle> vehicleStorage = new BindingList<Vehicle>();
+        private List<IVehicle> basicStorage;
+
+        private BindingList<IVehicle> vehicleStorage;
 
         public Lab5MainWindow()
         {
+            basicStorage = new List<IVehicle>();
+            vehicleStorage = new BindingList<IVehicle>(basicStorage);
             InitializeComponent();
             vehicles.DataSource = vehicleStorage;
             vehicles.DisplayMember = "Price";
@@ -43,5 +48,19 @@ namespace lab5
             new CreateShip(vehicleStorage).Show();
         }
 
+        private void addClones_Click(object sender, EventArgs e)
+        {
+            int storageCountForMomentOfEntering = vehicleStorage.Count;
+            for (int i = 0; i < storageCountForMomentOfEntering; i++)
+            {
+                vehicleStorage.Add((IVehicle)vehicleStorage[i].Clone());
+            }
+        }
+
+        private void sortByPrice_Click(object sender, EventArgs e)
+        {
+            basicStorage.Sort();
+            vehicleStorage.ResetBindings();
+        }
     }
 }
