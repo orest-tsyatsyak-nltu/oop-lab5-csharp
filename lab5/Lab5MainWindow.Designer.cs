@@ -33,7 +33,6 @@
             this.addPlain = new System.Windows.Forms.Button();
             this.addShip = new System.Windows.Forms.Button();
             this.addClones = new System.Windows.Forms.Button();
-            this.sortByPrice = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // vehicles
@@ -89,23 +88,11 @@
             this.addClones.UseVisualStyleBackColor = true;
             this.addClones.Click += new System.EventHandler(this.addClones_Click);
             // 
-            // sortByPrice
-            // 
-            this.sortByPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.sortByPrice.Location = new System.Drawing.Point(740, 285);
-            this.sortByPrice.Name = "sortByPrice";
-            this.sortByPrice.Size = new System.Drawing.Size(243, 52);
-            this.sortByPrice.TabIndex = 5;
-            this.sortByPrice.Text = "Sort by price";
-            this.sortByPrice.UseVisualStyleBackColor = true;
-            this.sortByPrice.Click += new System.EventHandler(this.sortByPrice_Click);
-            // 
             // Lab5MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1039, 450);
-            this.Controls.Add(this.sortByPrice);
             this.Controls.Add(this.addClones);
             this.Controls.Add(this.addShip);
             this.Controls.Add(this.addPlain);
@@ -124,7 +111,6 @@
         private System.Windows.Forms.Button addPlain;
         private System.Windows.Forms.Button addShip;
         private System.Windows.Forms.Button addClones;
-        private System.Windows.Forms.Button sortByPrice;
     }
 }
 

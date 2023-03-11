@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,6 +8,155 @@ using System.Threading.Tasks;
 
 namespace lab5
 {
+
+    public class VehicleCollectionQueue : IEnumerable<IVehicle>, IEnumerable
+    {
+
+        private Queue queue = new Queue();
+
+        public IVehicle this[int index] 
+        {
+            get
+            {
+                object toBeReturned = null;
+                int queueSize = queue.Count;
+                int counter = 0;
+                while (queueSize > 0)
+                {
+                    if (counter == index)
+                    {
+                        toBeReturned = queue.Dequeue();
+                        queue.Enqueue(toBeReturned);
+                    }
+                    else
+                    {
+                        queue.Enqueue(queue.Dequeue());
+                    }
+                    counter++;
+                    queueSize--;
+                }
+                return (IVehicle)toBeReturned;
+            }
+        }
+
+        public void Enqueue(object item)
+        {
+            if (!(item is IVehicle))
+            {
+                throw new ArgumentException("VehicleCollectionQueue can contain only elements that implement IVehicle");
+            }
+            queue.Enqueue(item);
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return queue.GetEnumerator();
+        }
+
+        IEnumerator<IVehicle> IEnumerable<IVehicle>.GetEnumerator()
+        {
+            return queue.GetEnumerator() as IEnumerator<IVehicle>;
+        }
+    }
+
+    public class VehicleCollectionQueue<T> : IList<T> where T : IVehicle
+    {
+
+        private Queue<T> queue = new Queue<T>();
+
+        public T this[int index] 
+        { 
+            get
+            {
+                return queue.ElementAt(index);
+            }
+            set 
+            {
+                Insert(index, value);
+            }
+        }
+
+        public int Count
+        {
+            get { return queue.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public void Add(T item)
+        {
+            queue.Enqueue(item);
+        }
+
+        public void Clear()
+        {
+            queue.Clear();
+        }
+
+        public bool Contains(T item)
+        {
+            return queue.Contains(item);
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            queue.CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return queue.GetEnumerator();
+        }
+
+        public int IndexOf(T item)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public void Insert(int index, T item)
+        {
+            int queueSize = queue.Count;
+            int counter = 0;
+            while (queueSize >= 0)
+            {
+                if (counter == index)
+                {
+                    queue.Enqueue(item);
+                }
+                else
+                {
+                    queue.Enqueue(queue.Dequeue());
+                }
+                counter++;
+                queueSize--;
+            }
+        }
+
+        public bool Remove(T item)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new InvalidOperationException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return queue.GetEnumerator();
+        }
+
+        public T First()
+        {
+            return queue.First();
+        }
+    }
+
+
     public interface IVehicle : ICloneable, IComparable<IVehicle>
     {
         int Price { get; set; }

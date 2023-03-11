@@ -14,13 +14,13 @@ namespace lab5
     public partial class Lab5MainWindow : Form
     {
 
-        private List<IVehicle> basicStorage;
+        private VehicleCollectionQueue<IVehicle> basicStorage;
 
         private BindingList<IVehicle> vehicleStorage;
 
         public Lab5MainWindow()
         {
-            basicStorage = new List<IVehicle>();
+            basicStorage = new VehicleCollectionQueue<IVehicle>();
             vehicleStorage = new BindingList<IVehicle>(basicStorage);
             InitializeComponent();
             vehicles.DataSource = vehicleStorage;
@@ -57,10 +57,10 @@ namespace lab5
             }
         }
 
-        private void sortByPrice_Click(object sender, EventArgs e)
-        {
-            basicStorage.Sort();
-            vehicleStorage.ResetBindings();
-        }
+        //private void sortByPrice_Click(object sender, EventArgs e)
+        //{
+        //    basicStorage.Sort();
+        //    vehicleStorage.ResetBindings();
+        //}
     }
 }
